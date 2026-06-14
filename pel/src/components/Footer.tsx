@@ -1,65 +1,95 @@
-import { ArrowUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { ArrowUp, Github, Linkedin, Send } from "lucide-react";
+import { motion } from "framer-motion";
+import { slowScrollTo } from "@/lib/scroll";
+
+const socialLinks = [
+  { icon: Github, href: "https://github.com/srenmopel-cpu", label: "GitHub" },
+  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: Send, href: "https://t.me", label: "Telegram" },
+];
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div>
-            <h3 className="text-2xl font-bold text-gradient mb-4">អ្នកអភិវឌ្ឍន៍</h3>
-            <p className="text-muted-foreground">
-              បង្កើតដំណោះស្រាយឌីជីថលដ៏ច្នៃប្រឌិត
-            </p>
-          </div>
+    <footer className="relative overflow-hidden border-t border-white/10 bg-slate-950/90">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.1),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(168,85,247,0.08),transparent_30%)]" />
+      <div className="container relative z-10 mx-auto px-4 py-10">
+        <div className="rounded-[2rem] border border-white/10 bg-white/5 px-6 py-8 backdrop-blur-2xl md:px-8">
+          <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:items-start">
+            <div>
+              <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">
+                Sren Mopel
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold text-white">
+                Futuristic portfolio experience built with care.
+              </h3>
+              <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-400">
+                Clean engineering, premium visuals, and thoughtful motion for a
+                portfolio that feels ready for real-world opportunities.
+              </p>
+            </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold mb-4">តំណរហ័ស</h4>
-            <div className="space-y-2">
-              {["ទំព័រដើម", "អំពីខ្ញុំ", "គម្រោង", "ទំនាក់ទំនង"].map((link) => (
-                <a
-                  key={link}
-                  href={`#${link === "ទំព័រដើម" ? "home" : link === "អំពីខ្ញុំ" ? "about" : link === "គម្រោង" ? "projects" : "contact"}`}
-                  className="block text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {link}
-                </a>
-              ))}
+            <div>
+              <p className="mb-4 text-sm uppercase tracking-[0.3em] text-slate-500">
+                Quick Links
+              </p>
+              <div className="grid gap-2 text-sm text-slate-300">
+                {[
+                  ["Home", "#home"],
+                  ["About", "#home"],
+                  ["Projects", "#projects"],
+                  ["Contact", "#contact"],
+                ].map(([label, href]) => (
+                  <a
+                    key={label}
+                    href={href}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      slowScrollTo(href.slice(1), { offset: 108, duration: 1400 });
+                    }}
+                    className="transition hover:text-white"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="mb-4 text-sm uppercase tracking-[0.3em] text-slate-500">
+                Social
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map(({ icon: Icon, href, label }) => (
+                  <motion.a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    whileHover={{ y: -2, scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-300 transition hover:border-cyan-300/30 hover:bg-white/10 hover:text-white"
+                    aria-label={label}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </motion.a>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => slowScrollTo(0, { duration: 1200 })}
+                className="mt-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-200 transition hover:border-cyan-300/40 hover:bg-cyan-500/15"
+              >
+                <ArrowUp className="h-4 w-4" />
+                Back to top
+              </button>
             </div>
           </div>
 
-          {/* Newsletter */}
-          <div>
-            <h4 className="font-semibold mb-4">ជាវព័ត៌មាន</h4>
-            <p className="text-sm text-muted-foreground mb-4">
-              ទទួលបានព័ត៌មានថ្មីៗអំពីគម្រោង និងអត្ថបទ
-            </p>
-            <div className="flex gap-2">
-              <Input placeholder="អ៊ីមែលរបស់អ្នក" />
-              <Button size="sm">ជាវ</Button>
-            </div>
+          <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
+            <p>Copyright © 2026 Sren Mopel. All rights reserved.</p>
+            <p>Designed for a futuristic, job-ready portfolio presentation.</p>
           </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-border">
-          <p className="text-sm text-muted-foreground">
-            © 2025 អ្នកអភិវឌ្ឍន៍. រក្សាសិទ្ធិគ្រប់យ៉ាង។
-          </p>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={scrollToTop}
-            className="mt-4 md:mt-0"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </Button>
         </div>
       </div>
     </footer>
